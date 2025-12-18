@@ -10,7 +10,7 @@
 # 4.¿Cómo varía la cantidad de accidentes a lo largo del año?
 # 5.¿Existen valores atípicos en la cantidad de personas lesionadas por accidente?
 
-#EJERCICIO 3: CARGA DEL DATASET Y CHEQUEO/LIMPIEZA DE LOS DATOS ---------------
+#EJERCICIOS 3: CARGA DEL DATASET Y CHEQUEO/LIMPIEZA ---------------
 
 accidentes <- read.csv("prioridad_accidentes.csv", stringsAsFactors = FALSE)
 
@@ -35,23 +35,7 @@ sapply(accidentes, class) #para verificar tipos de variables
 
 summary(accidentes) #resumen general de las variables para ver estadísticas descriptivas
 
-library(dplyr)
-
-accidentes %>%
-  filter(prioridad %in% c("ALTA", "MEDIA", "BAJA")) %>%  #distribución de accidentes según prioridad 
-  count(prioridad)
-
 summary(accidentes$total_lesionados) #se analiza la variable total_lesionados a modo de ejemplo, por tratarse de una variable numérica, relevante para evaluar la posibilidad de valores atípicos
-
-accidentes %>%
-  summarize(
-    promedio_lesionados = mean(total_lesionados, na.rm = TRUE),   #resumen estadístico de lesionados por accidente
-    max_lesionados = max(total_lesionados, na.rm = TRUE)
-  )
-
-cor(accidentes$total_occisos, 
-    accidentes$occisos_masculinos, #cálculo ilustrativo de correlación entre dos variables numéricas
-    use = "complete.obs")
 
 #EJERCICIO 5: TABLAS DE CONTINGENCIAS Y GRÁFICOS ------------------------------
 
@@ -63,10 +47,16 @@ prioridad_filtrada <- accidentes$prioridad[
 
 tabla_prioridad_filtrada <- table(prioridad_filtrada)
 
-barplot(tabla_prioridad_filtrada,
-        main = "Distribución de la prioridad de los accidentes",
-        xlab = "Prioridad",
-        ylab = "Cantidad")
+porcentajes <- round(100*tabla_prioridad_filtrada / sum (tabla_prioridad_filtrada), 1) 
+
+etiquetas <- paste(names(tabla_prioridad_filtrada),
+                   porcentajes, 
+                   "%")
+
+pie(tabla_prioridad_filtrada,
+    etiquetas,
+    main = "Distribución de la prioridad de los accidentes")
+
 
 #Pregunta 2: ¿Qué tipos de accidentes aparecen con mayor frecuencia?
 
