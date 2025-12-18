@@ -55,8 +55,8 @@ etiquetas <- paste(names(tabla_prioridad_filtrada),
 
 pie(tabla_prioridad_filtrada,
     etiquetas,
-    main = "Distribución de la prioridad de los accidentes")
-
+    main = "Distribución de la prioridad de los accidentes",
+    col = c("red","blue", "yellow"))
 
 #Pregunta 2: ¿Qué tipos de accidentes aparecen con mayor frecuencia?
 
@@ -66,14 +66,16 @@ barplot(tabla_evento,
         main = "Frecuencia de tipos de accidentes",
         xlab = "Tipo de evento",
         ylab = "Cantidad",
-        las = 2)
+        las = 2,
+        col = "lightgreen")
 
 #Pregunta 3: ¿Cómo se distribuye la cantidad de personas lesionadas por accidente?
 
 hist(accidentes$total_lesionados,
      main = "Distribución total de lesionados por accidente",
      xlab = "Cantidad de lesionados",
-     ylab = "Frecuencia")
+     ylab = "Frecuencia",
+     col = "gray")
 
 #Pregunta 4: ¿Cómo varía la cantidad de accidentes a lo largo del año?
 
@@ -93,7 +95,8 @@ barplot(tabla_mes_filtrado,
         main = "Cantidad de accidentes por mes",
         xlab = "Mes",
         ylab = "Cantidad",
-        las = 2)
+        las = 2, 
+        col = "lightblue")
 
 #Pregunta 5: ¿Existen valores atípicos en la cantidad de personas lesionadas por accidente?
 
@@ -111,3 +114,4 @@ ggplot(accidentes,aes(x = alcaldia)) +
        x = "Alcaldía",
        y = "Cantidad de accidentes") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
